@@ -1,23 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Eli1771 
-0
-0 65 Eli1771/sinatra-password-security-online-web-sp-000
-forked from learn-co-students/sinatra-password-security-online-web-sp-000
- Code  Pull requests 0  Projects 0  Security  Insights  Settings
-sinatra-password-security-online-web-sp-000/app/controllers/application_controller.rb
- maxwell aligned solution and master commit trees, updated migration
-e252c48 on Mar 7
-@ipc103 @maxwellbenton
-70 lines (57 sloc)  1 KB
-    
 require "./config/environment"
 require "./app/models/user"
 class ApplicationController < Sinatra::Base
@@ -36,26 +16,28 @@ class ApplicationController < Sinatra::Base
 		erb :signup
 	end
 
-	post "/signup" do
-		user = User.new(:username => params[:username], :password => params[:password])
-		if user.save
-			redirect "/login"
-		else
-			redirect "/failure"
-		end
-	end
+post "/signup" do
+  user = User.new(:username => params[:username], :password => params[:password])
+
+  if user.save
+    redirect "/login"
+  else
+    redirect "/failure"
+  end
+end
 
 	get "/login" do
 		erb :login
 	end
 
 	post "/login" do
-		user = User.find_by(:username => params[:username])
+		#your code here!
+		user = User.find_by(username: params[:username])
 		if user && user.authenticate(params[:password])
-			session[:user_id] = user.id
-			redirect "/success"
-		else
-			redirect "failure"
+		  session[:user_id] = user.id
+		  redirect "/success"
+		else 
+		  redirect "/failure"
 		end
 	end
 
